@@ -417,9 +417,10 @@ function rotateMatrix(matrix) {
  */
 function sortByAsc(arr) {
   const result = arr;
-  for (let i = 0; i < result.length; i += 1) {
+  const len = arr.length;
+  for (let i = 0; i < len; i += 1) {
     let minInd = i;
-    for (let k = i + 1; k < result.length; k += 1) {
+    for (let k = i + 1; k < len; k += 1) {
       if (result[k] < result[minInd]) minInd = k;
     }
     if (minInd !== i) {
@@ -428,13 +429,13 @@ function sortByAsc(arr) {
       result[minInd] = tmp;
     }
   }
-  return arr;
+  return result;
 }
 
 /**
  * Shuffles characters in a string so that the characters with an odd index are moved to the end of the string at each iteration.
  * Take into account that the string can be very long and the number of iterations is large. Consider how you can optimize your solution.
- * Usage of Array class methods is not allowed in this task.
+ *
  *
  * @param {string} str - The string to shuffle.
  * @param {number} iterations - The number of iterations to perform the shuffle.
@@ -448,8 +449,20 @@ function sortByAsc(arr) {
  *  '012345', 3 => '024135' => '043215' => '031425'
  *  'qwerty', 3 => 'qetwry' => 'qtrewy' => 'qrwtey'
  */
-function shuffleChar(/* str, iterations */) {
-  throw new Error('Not implemented');
+function shuffleChar(str, iterations) {
+  let resultStr = str;
+  let k = iterations;
+  while (k > 0) {
+    let endStr = '';
+    let startStr = '';
+    for (let i = 0; i < resultStr.length; i += 1) {
+      if (i % 2 === 0) startStr += resultStr[i];
+      else endStr += resultStr[i];
+    }
+    resultStr = startStr + endStr;
+    k -= 1;
+  }
+  return resultStr;
 }
 
 /**
