@@ -451,16 +451,18 @@ function sortByAsc(arr) {
  */
 function shuffleChar(str, iterations) {
   let resultStr = str;
-  let k = iterations;
-  while (k > 0) {
-    let endStr = '';
-    let startStr = '';
-    for (let i = 0; i < resultStr.length; i += 1) {
-      if (i % 2 === 0) startStr += resultStr[i];
-      else endStr += resultStr[i];
+  for (let k = 1; k <= iterations; k += 1) {
+    let start = '';
+    let end = '';
+    for (let i = 0; i < str.length; i += 1) {
+      if (i % 2 === 0) {
+        start += resultStr[i];
+      } else {
+        end += resultStr[i];
+      }
     }
-    resultStr = startStr + endStr;
-    k -= 1;
+    resultStr = start + end;
+    if (str === resultStr) return shuffleChar(str, iterations % k);
   }
   return resultStr;
 }
@@ -482,8 +484,19 @@ function shuffleChar(str, iterations) {
  * @param {number} number The source number
  * @returns {number} The nearest larger number, or original number if none exists.
  */
-function getNearestBigger(/* number */) {
-  throw new Error('Not implemented');
+function getNearestBigger(number) {
+  const arr = [...`${number}`];
+  let num = arr.length - 1;
+  while (arr[num - 1] >= arr[num]) {
+    if (num === 0) return number;
+    num -= 1;
+  }
+  let j = arr.length - 1;
+  while (arr[j] <= arr[num - 1]) j -= 1;
+  [arr[num - 1], arr[j]] = [arr[j], arr[num - 1]];
+  const end = arr.splice(num).sort();
+  const result = +[...arr, ...end].join('');
+  return result;
 }
 
 module.exports = {
