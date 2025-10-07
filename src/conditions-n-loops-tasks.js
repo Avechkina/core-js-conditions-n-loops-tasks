@@ -418,18 +418,21 @@ function rotateMatrix(matrix) {
  */
 function sortByAsc(arr) {
   const result = arr;
-  const len = arr.length;
-  for (let i = 0; i < len; i += 1) {
-    let minInd = i;
-    for (let k = i + 1; k < len; k += 1) {
-      if (result[k] < result[minInd]) minInd = k;
+  function quickSort(start, end) {
+    if (start >= end) return;
+    const pivot = result[end];
+    let i = start;
+    for (let j = start; j < end; j += 1) {
+      if (result[j] < pivot) {
+        [result[i], result[j]] = [result[j], result[i]];
+        i += 1;
+      }
     }
-    if (minInd !== i) {
-      const tmp = result[i];
-      result[i] = result[minInd];
-      result[minInd] = tmp;
-    }
+    [result[i], result[end]] = [result[end], result[i]];
+    quickSort(start, i - 1);
+    quickSort(i + 1, end);
   }
+  quickSort(0, result.length - 1);
   return result;
 }
 
